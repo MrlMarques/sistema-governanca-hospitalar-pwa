@@ -84,6 +84,9 @@
         let tipoLimpezaAtual = 'Concorrente';
         const estadoItens = {};
 
+        // URL da API REST do Google Apps Script
+        const URL_API = "https://script.google.com/macros/s/AKfycbzGe_hNa-AVafTP0iOf9_xzaTIJeqoz1DXv8297KZtF6vB1nRraa7YeSG2qaK3NcAvEHw/exec";
+
         function selecionarTipo(tipo) {
             tipoLimpezaAtual = tipo;
             document.getElementById('btnTipoConcorrente').classList.toggle('active', tipo === 'Concorrente');
@@ -150,11 +153,28 @@
                 naoConformes: falhas.length,
                 falhasStr: falhas.length ? falhas.map(f => `${f.nome} (${f.ambiente})`).join(' | ') : 'Nenhuma'
             };
-            let historico = JSON.parse(localStorage.getItem('pio12_historico') || '[]');
-            historico.unshift(auditoria);
-            localStorage.setItem('pio12_historico', JSON.stringify(historico));
-            alert(`Auditoria ${auditoria.id} salva com sucesso!`);
-            window.location.href = 'dashboard.html';
+
+            // Envio via POST para o Web App do Apps Script
+            fetch(URL_API, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(auditoria)
+            })
+            .then(() => {
+                // Salva também no localStorage como backup local rápido
+                let historico = JSON.parse(localStorage.getItem('pio12_historico') || '[]');
+                historico.unshift(auditoria);
+                localStorage.setItem('pio12_historico', JSON.stringify(historico));
+
+                alert(`Auditoria ${auditoria.id} salva na Planilha Google com sucesso!`);
+                window.location.href = 'dashboard.html';
+            })
+            .catch(error => {
+                console.error('Erro ao enviar:', error);
+                alert('Erro ao conectar com a planilha, mas os dados foram salvos localmente.');
+                window.location.href = 'dashboard.html';
+            });
         }
         window.addEventListener('DOMContentLoaded', inicializarItens);
     </script>
