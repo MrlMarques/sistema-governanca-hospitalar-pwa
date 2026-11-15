@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#9A2B2E">
+    <title>Checklist • Hospital Pio XII</title>
+    <style>
+        :root { --bordo: #9A2B2E; --bordo-escuro: #6E1B1E; --bg-page: #F1F5F9; --card-bg: #FFFFFF; --border: #E2E8F0; --text-main: #0F172A; --text-sec: #334155; --verde: #15803D; --verde-bg: #DCFCE7; --vermelho: #B91C1C; --vermelho-bg: #FEE2E2; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg-page); color: var(--text-main); padding-bottom: 90px; }
+        .header { background: linear-gradient(135deg, var(--bordo) 0%, var(--bordo-escuro) 100%); color: #FFFFFF; padding: 16px; position: sticky; top: 0; z-index: 50; }
+        .header-inner { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; }
+        .brand-logo { background: #FFFFFF; padding: 5px 8px; border-radius: 9px; font-weight: 900; color: var(--bordo); }
+        .brand h1 { font-size: 1rem; font-weight: 800; }
+        .score-pill { background: rgba(255, 255, 255, 0.18); padding: 6px 12px; border-radius: 99px; font-size: 0.82rem; font-weight: 800; }
+        .container { max-width: 760px; margin: 0 auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 14px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .card-title { font-size: 0.92rem; font-weight: 800; color: var(--bordo); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        @media(min-width:560px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+        .field { display: flex; flex-direction: column; gap: 5px; }
+        .field label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--text-sec); }
+        .input-std { width: 100%; padding: 11px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 16px; background: #F8FAFC; outline: none; }
+        .tipo-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .tipo-btn { padding: 10px; border-radius: 10px; border: 1.5px solid var(--border); background: #F8FAFC; font-weight: 800; color: var(--text-sec); cursor: pointer; text-align: center; }
+        .tipo-btn.active { background: #FDF2F2; border-color: var(--bordo); color: var(--bordo); }
+        .btn-marcar-todos { background: var(--verde-bg); color: var(--verde); border: 1px solid #86EFAC; padding: 5px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 800; cursor: pointer; }
+        .item-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 11px; background: #FFFFFF; }
+        .item-row.status-nc { background: #FEF2F2; border-color: #FECACA; }
+        .item-name { font-size: 0.88rem; font-weight: 700; }
+        .status-pills { display: flex; gap: 6px; }
+        .pill-btn { padding: 7px 11px; border-radius: 8px; border: 1.5px solid var(--border); background: #F8FAFC; font-weight: 800; cursor: pointer; color: #64748B; }
+        .pill-btn.c-active { background: var(--verde); border-color: var(--verde); color: #FFFFFF; }
+        .pill-btn.nc-active { background: var(--vermelho); border-color: var(--vermelho); color: #FFFFFF; }
+        .pill-btn.na-active { background: #475569; border-color: #475569; color: #FFFFFF; }
+        .submit-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #FFFFFF; border-top: 1px solid var(--border); padding: 12px 16px; z-index: 60; }
+        .submit-inner { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .btn-enviar { background: var(--bordo); color: #FFFFFF; border: none; padding: 13px 22px; border-radius: 11px; font-size: 0.9rem; font-weight: 800; cursor: pointer; }
+        .back-link { font-size: 0.75rem; color: #FFFFFF; text-decoration: underline; display: inline-block; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="brand">
+                <a href="portal.html" class="brand-logo" style="text-decoration:none; color:var(--bordo);">⬅</a>
+                <div><h1>Auditoria de Leito</h1><a href="portal.html" class="back-link">Voltar ao Portal</a></div>
+            </div>
+            <div class="score-pill" id="badgeNotaTempoReal">100% Conforme</div>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card">
+            <div class="card-title">1. Identificação da Auditoria</div>
+            <div class="grid-2">
+                <div class="field"><label>Auditora *</label><select id="auditora" class="input-std"><option value="Fernanda">Fernanda</option><option value="Lúcia">Lúcia</option><option value="Rayane">Rayane</option><option value="Adriana">Adriana</option><option value="Maria">Maria</option></select></div>
+                <div class="field"><label>Setor / Ala *</label><select id="setor" class="input-std"><option value="Clínica Médica">Clínica Médica</option><option value="Clínica Cirúrgica">Clínica Cirúrgica</option><option value="UTI Adulto">UTI Adulto</option><option value="Pronto-Socorro">Pronto-Socorro</option></select></div>
+            </div>
+            <div class="grid-2">
+                <div class="field"><label>Leito / Quarto *</label><input type="text" id="leito" class="input-std" placeholder="Ex: 204-A..."></div>
+                <div class="field"><label>Modalidade</label><div class="tipo-group"><button type="button" class="tipo-btn active" id="btnTipoConcorrente" onclick="selecionarTipo('Concorrente')">Concorrente</button><button type="button" class="tipo-btn" id="btnTipoTerminal" onclick="selecionarTipo('Terminal')">Terminal</button></div></div>
+            </div>
+        </section>
+        <section class="card">
+            <div class="card-title"><span>2. Quarto (25 Itens)</span><button type="button" class="btn-marcar-todos" onclick="marcarTodosConforme('Quarto')">✔ Todos Conformes</button></div>
+            <div id="listaItensQuarto" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </section>
+        <section class="card">
+            <div class="card-title"><span>3. Banheiro (7 Itens)</span><button type="button" class="btn-marcar-todos" onclick="marcarTodosConforme('Banheiro')">✔ Todos Conformes</button></div>
+            <div id="listaItensBanheiro" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </section>
+    </main>
+    <div class="submit-bar">
+        <div class="submit-inner">
+            <div id="resumoContagem" style="font-size:0.78rem; font-weight:700;">32 Conforme(s) • 0 Não Conforme(s)</div>
+            <button type="button" class="btn-enviar" onclick="enviarChecklist()">Salvar Auditoria</button>
+        </div>
+    </div>
+    <script>
+        const ITENS_QUARTO = ['Teto', 'Parede', 'Régua de Gases', 'Cama', 'Campainha', 'Escada beira leito', 'Suporte de soro', 'Mesa de refeição', 'Mesa de cabeceira', 'Poltrona / Sofá', 'Televisão', 'Controle TV/Ar', 'Janelas / Telas', 'Persiana janela', 'Pia do quarto', 'Lixeiras', 'Cortina divisória', 'Frigobar', 'Armários', 'Mesa / Cadeira', 'Dispenser', 'Quadro', 'Interruptor quarto', 'Portas', 'Maçaneta quarto'];
+        const ITENS_BANHEIRO = ['Maçaneta banheiro', 'Interruptor banheiro', 'Pia do banheiro', 'Vaso sanitário', 'Ducha higiênica', 'Barra de apoio', 'Ralo'];
+        let tipoLimpezaAtual = 'Concorrente';
+        const estadoItens = {};
+
+        function selecionarTipo(tipo) {
+            tipoLimpezaAtual = tipo;
+            document.getElementById('btnTipoConcorrente').classList.toggle('active', tipo === 'Concorrente');
+            document.getElementById('btnTipoTerminal').classList.toggle('active', tipo === 'Terminal');
+        }
+        function inicializarItens() {
+            ITENS_QUARTO.forEach(n => estadoItens[n] = { status: 'C', ambiente: 'Quarto' });
+            ITENS_BANHEIRO.forEach(n => estadoItens[n] = { status: 'C', ambiente: 'Banheiro' });
+            renderizarLista(ITENS_QUARTO, 'listaItensQuarto');
+            renderizarLista(ITENS_BANHEIRO, 'listaItensBanheiro');
+            atualizarResumo();
+        }
+        function renderizarLista(lista, contId) {
+            document.getElementById(contId).innerHTML = lista.map(nome => {
+                const st = estadoItens[nome].status;
+                return `
+                    <div class="item-row ${st === 'NC' ? 'status-nc' : ''}">
+                        <span class="item-name">${nome}</span>
+                        <div class="status-pills">
+                            <button type="button" class="pill-btn ${st === 'C' ? 'c-active' : ''}" onclick="setStatus('${nome}', 'C')">C</button>
+                            <button type="button" class="pill-btn ${st === 'NC' ? 'nc-active' : ''}" onclick="setStatus('${nome}', 'NC')">NC</button>
+                            <button type="button" class="pill-btn ${st === 'NA' ? 'na-active' : ''}" onclick="setStatus('${nome}', 'NA')">N/A</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        function setStatus(nome, st) {
+            estadoItens[nome].status = st;
+            renderizarLista(ITENS_QUARTO, 'listaItensQuarto');
+            renderizarLista(ITENS_BANHEIRO, 'listaItensBanheiro');
+            atualizarResumo();
+        }
+        function marcarTodosConforme(amb) {
+            (amb === 'Quarto' ? ITENS_QUARTO : ITENS_BANHEIRO).forEach(n => estadoItens[n].status = 'C');
+            renderizarLista(ITENS_QUARTO, 'listaItensQuarto');
+            renderizarLista(ITENS_BANHEIRO, 'listaItensBanheiro');
+            atualizarResumo();
+        }
+        function atualizarResumo() {
+            const vals = Object.values(estadoItens);
+            const c = vals.filter(v => v.status === 'C').length;
+            const nc = vals.filter(v => v.status === 'NC').length;
+            const validos = c + nc;
+            document.getElementById('resumoContagem').textContent = `${c} Conforme(s) • ${nc} Não Conforme(s)`;
+            document.getElementById('badgeNotaTempoReal').textContent = `${validos > 0 ? Math.round((c/validos)*100) : 100}% Conforme`;
+        }
+        function enviarChecklist() {
+            const leito = document.getElementById('leito').value.trim();
+            if (!leito) { alert('Informe o leito antes de salvar.'); return; }
+            const falhas = []; let totalValidos = 0;
+            Object.entries(estadoItens).forEach(([nome, info]) => {
+                if (info.status !== 'NA') totalValidos++;
+                if (info.status === 'NC') falhas.push({ nome, ambiente: info.ambiente });
+            });
+            const auditoria = {
+                id: 'CHK-' + Math.floor(100000 + Math.random() * 900000),
+                dataHora: new Date().toLocaleString('pt-BR'),
+                auditora: document.getElementById('auditora').value,
+                setor: document.getElementById('setor').value,
+                leito,
+                tipoLimpeza: tipoLimpezaAtual,
+                totalItens: totalValidos,
+                naoConformes: falhas.length,
+                falhasStr: falhas.length ? falhas.map(f => `${f.nome} (${f.ambiente})`).join(' | ') : 'Nenhuma'
+            };
+            let historico = JSON.parse(localStorage.getItem('pio12_historico') || '[]');
+            historico.unshift(auditoria);
+            localStorage.setItem('pio12_historico', JSON.stringify(historico));
+            alert(`Auditoria ${auditoria.id} salva com sucesso!`);
+            window.location.href = 'dashboard.html';
+        }
+        window.addEventListener('DOMContentLoaded', inicializarItens);
+    </script>
+</body>
+</html>
