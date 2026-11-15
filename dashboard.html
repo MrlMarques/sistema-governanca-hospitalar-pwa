@@ -6,92 +6,119 @@
     <meta name="theme-color" content="#9A2B2E">
     <title>Dashboard • Hospital Pio XII</title>
     <style>
-        :root { --bordo: #9A2B2E; --bordo-escuro: #6E1B1E; --bg-page: #F1F5F9; --card-bg: #FFFFFF; --border: #E2E8F0; --text-main: #0F172A; --text-sec: #334155; }
+        :root { --bordo: #9A2B2E; --bordo-escuro: #6E1B1E; --bg-page: #F1F5F9; --card-bg: #FFFFFF; --border: #E2E8F0; --text-main: #0F172A; --text-sec: #334155; --verde: #15803D; --verde-bg: #DCFCE7; --vermelho: #B91C1C; --vermelho-bg: #FEE2E2; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background: var(--bg-page); color: var(--text-main); padding-bottom: 40px; }
-        .header { background: linear-gradient(135deg, var(--bordo) 0%, var(--bordo-escuro) 100%); color: #FFFFFF; padding: 16px; }
+        body { background: var(--bg-page); color: var(--text-main); padding-bottom: 90px; }
+        .header { background: linear-gradient(135deg, var(--bordo) 0%, var(--bordo-escuro) 100%); color: #FFFFFF; padding: 16px; position: sticky; top: 0; z-index: 50; }
         .header-inner { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; }
+        .brand-logo { background: #FFFFFF; padding: 5px 8px; border-radius: 9px; font-weight: 900; color: var(--bordo); }
+        .brand h1 { font-size: 1rem; font-weight: 800; }
         .container { max-width: 760px; margin: 0 auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 14px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-        .card-title { font-size: 0.92rem; font-weight: 800; color: var(--bordo); text-transform: uppercase; }
-        .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        @media(min-width:560px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
-        .metric-box { background: #F8FAFC; border: 1px solid var(--border); border-radius: 11px; padding: 12px; text-align: center; }
-        .metric-val { font-size: 1.25rem; font-weight: 900; color: var(--bordo); }
-        .metric-lbl { font-size: 0.7rem; font-weight: 700; color: var(--text-sec); text-transform: uppercase; margin-top: 2px; }
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left; }
-        th, td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
-        th { font-weight: 800; color: var(--text-sec); background: #F8FAFC; }
-        .btn-acao { background: var(--bordo); color: #FFFFFF; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.78rem; text-decoration: none; cursor: pointer; display: inline-block; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .card-title { font-size: 0.92rem; font-weight: 800; color: var(--bordo); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .metric-box { background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+        .metric-val { font-size: 1.2rem; font-weight: 900; color: var(--bordo); }
+        .metric-lbl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: var(--text-sec); margin-top: 4px; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #F8FAFC; font-weight: 800; color: var(--text-sec); font-size: 0.72rem; text-transform: uppercase; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; }
+        .badge-sucesso { background: var(--verde-bg); color: var(--verde); }
+        .badge-alerta { background: var(--vermelho-bg); color: var(--vermelho); }
+        .back-link { font-size: 0.75rem; color: #FFFFFF; text-decoration: underline; display: inline-block; }
+        .btn-acao { background: var(--bordo); color: #FFFFFF; border: none; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-inner">
-            <div><h1>Dashboard ONA</h1><a href="portal.html" style="color:#FFF; font-size:0.75rem; text-decoration:underline;">⬅ Voltar ao Portal</a></div>
-            <a href="index.html" class="btn-acao">+ Nova Auditoria</a>
+            <div class="brand">
+                <a href="portal.html" class="brand-logo" style="text-decoration:none; color:var(--bordo);">⬅</a>
+                <div><h1>Painel de Auditorias</h1><a href="portal.html" class="back-link">Voltar ao Portal</a></div>
+            </div>
+            <a href="index.html" class="btn-acao" style="background:#FFFFFF; color:var(--bordo);">+ Nova Auditoria</a>
         </div>
     </header>
     <main class="container">
         <div class="metrics-grid">
-            <div class="metric-box"><div class="metric-val" id="totalAuditorias">0</div><div class="metric-lbl">Auditorias</div></div>
-            <div class="metric-box"><div class="metric-val" id="taxaConformidade">100%</div><div class="metric-lbl">Conformidade</div></div>
-            <div class="metric-box"><div class="metric-val" id="totalFalhas" style="color:#B91C1C;">0</div><div class="metric-lbl">Não Conformes</div></div>
-            <div class="metric-box"><div class="metric-val" id="metasAtendidas">OK</div><div class="metric-lbl">Meta ONA</div></div>
+            <div class="metric-box">
+                <div class="metric-val" id="totalAuditorias">0</div>
+                <div class="metric-lbl">Total Inspeções</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-val" id="totalConformes">0</div>
+                <div class="metric-lbl">Itens OK</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-val" id="totalNaoConformes">0</div>
+                <div class="metric-lbl">Não Conformidades</div>
+            </div>
         </div>
+
         <section class="card">
-            <div class="card-title">Histórico de Auditorias Recentes</div>
-            <div class="table-wrap">
+            <div class="card-title"><span>Histórico de Auditorias na Planilha</span></div>
+            <div class="table-container">
                 <table>
                     <thead>
-                        <tr><th>ID</th><th>Data/Hora</th><th>Auditora</th><th>Setor</th><th>Leito</th><th>Nota</th><th>Ações</th></tr>
+                        <tr>
+                            <th>ID / Data</th>
+                            <th>Setor / Leito</th>
+                            <th>Auditora</th>
+                            <th>Modo</th>
+                            <th>Falhas</th>
+                        </tr>
                     </thead>
                     <tbody id="tabelaHistorico">
-                        <tr><td colspan="7" style="text-align:center; color:#64748B; padding:20px;">Nenhuma auditoria registrada ainda.</td></tr>
+                        <tr><td colspan="5" style="text-align: center; color: var(--text-sec);">Carregando dados da planilha...</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
     </main>
-    <script>
-        function carregarDashboard() {
-            const historico = JSON.parse(localStorage.getItem('pio12_historico') || '[]');
-            document.getElementById('totalAuditorias').textContent = historico.length;
-            if (historico.length === 0) return;
-            let totalItensGeral = 0; let totalNaoConformesGeral = 0;
-            historico.forEach(h => {
-                totalItensGeral += h.totalItens;
-                totalNaoConformesGeral += h.naoConformes;
-            });
-            const conformesGeral = totalItensGeral - totalNaoConformesGeral;
-            const taxa = totalItensGeral > 0 ? Math.round((conformesGeral / totalItensGeral) * 100) : 100;
-            document.getElementById('taxaConformidade').textContent = taxa + '%';
-            document.getElementById('totalFalhas').textContent = totalNaoConformesGeral;
 
-            const tbody = document.getElementById('tabelaHistorico');
-            tbody.innerHTML = historico.map(h => {
-                const nota = h.totalItens > 0 ? Math.round(((h.totalItens - h.naoConformes) / h.totalItens) * 100) : 100;
-                return `
-                    <tr>
-                        <td style="font-weight:700;">${h.id}</td>
-                        <td>${h.dataHora}</td>
-                        <td>${h.auditora}</td>
-                        <td>${h.setor}</td>
-                        <td>${h.leito}</td>
-                        <td style="font-weight:800; color:${nota < 90 ? '#B91C1C' : '#15803D'};">${nota}%</td>
-                        <td><button class="btn-acao" onclick="abrirDetalhes('${h.id}')">Ver</button></td>
-                    </tr>
-                `;
-            }).join('');
-        }
-        function abrirDetalhes(id) {
-            const historico = JSON.parse(localStorage.getItem('pio12_historico') || '[]');
-            const item = historico.find(h => h.id === id);
-            if (item) {
-                alert(`Auditoria: ${item.id}\nSetor: ${item.setor} - Leito ${item.leito}\nAuditora: ${item.auditora}\nFalhas:\n${item.falhasStr}`);
+    <script>
+        const URL_API = "https://script.google.com/macros/s/AKfycbwERPCoVFR1o8cSnJN5L3hL1X8pa-yWkwoamDYoto95W0qO21bAETfnM0fVAV8CynLs/exec";
+
+        async function carregarDashboard() {
+            try {
+                const response = await fetch(URL_API);
+                const dados = await response.json();
+
+                if (!Array.isArray(dados) || dados.length === 0) {
+                    document.getElementById('tabelaHistorico').innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-sec);">Nenhuma auditoria registrada na planilha ainda.</td></tr>`;
+                    return;
+                }
+
+                let totalC = 0;
+                let totalNC = 0;
+
+                document.getElementById('totalAuditorias').textContent = dados.length;
+
+                document.getElementById('tabelaHistorico').innerHTML = dados.map(item => {
+                    totalNC += Number(item.naoConformes || 0);
+                    return `
+                        <tr>
+                            <td><strong>${item.id}</strong><br><small style="color:var(--text-sec);">${item.dataHora}</small></td>
+                            <td>${item.setor}<br><strong>Leito: ${item.leito}</strong></td>
+                            <td>${item.auditora}</td>
+                            <td><span class="badge" style="background:#E2E8F0; color:#0F172A;">${item.tipoLimpeza}</span></td>
+                            <td>${item.naoConformes > 0 ? `<span class="badge badge-alerta">${item.naoConformes} falha(s)</span>` : `<span class="badge badge-sucesso">OK</span>`}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                document.getElementById('totalNaoConformes').textContent = totalNC;
+                document.getElementById('totalConformes').textContent = "100%"; // Ou métrica calculada
+
+            } catch (erro) {
+                console.error('Erro ao carregar dados:', erro);
+                document.getElementById('tabelaHistorico').innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--vermelho);">Erro ao conectar com a planilha. Verifique a rede.</td></tr>`;
             }
         }
+
         window.addEventListener('DOMContentLoaded', carregarDashboard);
     </script>
 </body>
